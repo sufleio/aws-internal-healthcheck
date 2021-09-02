@@ -9,16 +9,19 @@ def lambda_handler(event, context):
 	r = http.request('GET', url)
 
 	#2. Construct the body of the response object
-	transactionResponse = {}
-	transactionResponse['url'] = url
-	transactionResponse['message'] = r.status
+	transaction_response = {
+		'url': url, 
+		'message': r.status
+	}
 
 	#3. Construct http response object
-	responseObject = {}
-	responseObject['statusCode'] = r.status
-	responseObject['headers'] = {}
-	responseObject['headers']['Content-Type'] = 'application/json'
-	responseObject['body'] = json.dumps(transactionResponse)
+	response_object = {
+		'headers': {
+			'Content-Type': 'application/json'
+		},
+		'statusCode': r.status,
+		'body': json.dumps(transaction_response)
+	}
 
 	#4. Return the response object
-	return r.status
+	return response_object
